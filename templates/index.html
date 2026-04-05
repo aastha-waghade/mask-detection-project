@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Mask Detection</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dark-theme">
+
+<!-- 🔥 NAVBAR -->
+<div class="navbar">
+
+    <h2 class="logo">😷 Smart Mask Detection</h2>
+
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+    <div class="nav-links" id="navLinks">
+        <a href="/">Home</a>
+        <a href="/admin">Admin</a>
+    </div>
+
+</div>
+
+<!-- 🔥 MAIN -->
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header-box">
+        <h1>AI Surveillance Dashboard</h1>
+        <p>Real-Time Face Mask Detection System</p>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="btns">
+        <button class="start mobile-btn" onclick="startUserCamera()">📱 Start Camera</button>
+        <button class="stop mobile-btn" onclick="stopUserCamera()">⏹ Stop Camera</button>
+    </div>
+
+    <!-- LOADER -->
+    <div id="loader">
+        <div class="loader-box">
+            <div class="spinner"></div>
+            <p>Starting Camera...</p>
+        </div>
+    </div>
+
+    <!-- 🔥 HIDDEN VIDEO (BACKGROUND STREAM) -->
+    <video id="userVideo" autoplay playsinline style="display:none;"></video>
+
+    <!-- 🔥 PROCESSED OUTPUT -->
+    <div class="video-container">
+        <img id="processedVideo" alt="Processed Camera Feed" style="display:none; width:100%; max-width:900px; border-radius:12px;" />
+    </div>
+
+    <!-- 🔥 HIDDEN CANVAS -->
+    <canvas id="canvas" style="display:none;"></canvas>
+
+    <!-- STATS -->
+    <div class="stats">
+
+        <div class="card green">
+            <h3>Mask</h3>
+            <p id="maskCount">0</p>
+        </div>
+
+        <div class="card red">
+            <h3>No Mask</h3>
+            <p id="noMaskCount">0</p>
+        </div>
+
+        <div class="card blue">
+            <h3>Compliance</h3>
+            <p id="compliance">0%</p>
+        </div>
+
+        <div class="card white">
+            <h3>Total Persons</h3>
+            <p id="totalCount">0</p>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

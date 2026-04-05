@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<meta http-equiv="refresh" content="5">
+</head>
+
+<body class="dark-theme">
+
+<!-- NAVBAR -->
+<div class="navbar">
+
+    <h2 class="logo">📊 Analytics Dashboard</h2>
+
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+
+    <div class="nav-links" id="navLinks">
+        <a href="/">⬅ Back</a>
+    </div>
+
+</div>
+
+<div class="dashboard-container">
+
+    <h1>Detection Logs</h1>
+    <p class="subtitle">Today's Monitoring Data</p>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Mask</th>
+                    <th>No Mask</th>
+                    <th>Total</th>
+                    <th>Compliance</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            {% if data and data[0] %}
+            
+                {% set mask = data[1] or 0 %}
+                {% set no_mask = data[2] or 0 %}
+                {% set total = mask + no_mask %}
+                {% set percent = (mask / total * 100) if total else 0 %}
+
+                <tr>
+                    <td>{{ data[0] }}</td>
+
+                    <td class="mask">{{ mask }}</td>
+                    <td class="nomask">{{ no_mask }}</td>
+
+                    <td>{{ total }}</td>
+
+                    <td>{{ "%.1f"|format(percent) }}%</td>
+
+                    <td>
+                        {% if percent > 70 %}
+                            <span class="status good">✔ Safe</span>
+                        {% elif percent > 40 %}
+                            <span class="status neutral">— Moderate</span>
+                        {% else %}
+                            <span class="status bad">⚠ Risk</span>
+                        {% endif %}
+                    </td>
+                </tr>
+
+            {% else %}
+                <tr>
+                    <td colspan="6">No data available</td>
+                </tr>
+            {% endif %}
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
